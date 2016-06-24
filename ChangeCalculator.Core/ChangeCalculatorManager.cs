@@ -6,16 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChangeCalculator.Core
-{
-    public class ChangeCalculatorManager : IChangeCalculator
-    {
+namespace ChangeCalculator.Core {
+    public class ChangeCalculatorManager : IChangeCalculator {
 
         private List<Counter> CounterCollection { get; set; }
         private Counter Counter { get; set; }
-
-        public ChangeCalculatorManager()
-        {
+        /// <summary>
+        /// 
+        /// </summary>
+        public ChangeCalculatorManager() {
 
             var oneRealCounter = new OneRealCounter();
             var fifthCentsCounter = new FifthCentsCounter();
@@ -31,33 +30,40 @@ namespace ChangeCalculator.Core
             fiveCentsCounter.setNext(oneCentsCounter);
 
             CounterCollection = new List<Counter>{
-				oneRealCounter,
-				fifthCentsCounter,
-				twentyFiveCentsCounter,
-				tenCentsCounter,
-				fiveCentsCounter,
-				oneCentsCounter
-			};
+                oneRealCounter,
+                fifthCentsCounter,
+                twentyFiveCentsCounter,
+                tenCentsCounter,
+                fiveCentsCounter,
+                oneCentsCounter
+            };
 
             Counter = oneRealCounter;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="calculatorChangeRequest"></param>
+        /// <returns></returns>
+        public CalculatorChangeResponse Calculator(CalculatorChangeRequest calculatorChangeRequest) {
+            CalculatorChangeResponse calculatorChangeResponse = new CalculatorChangeResponse();
 
-        public CalculatorChangeResponse Calculator(CalculatorChangeRequest calculatorChangeRequest)
-        {
-            CalculatorChangeResponse calculatorChangeResponse = new CalculatorChangeResponse
-            {
-                Success = true
-            };
+            try {
 
-            try
-            {
-                calculatorChangeResponse.Code = "SUCCESS001";
+
+                if (calculatorChangeRequest.IsValid() == false) {
+
+                    calculatorChangeResponse.MessageCollection = calculatorChangeRequest.MessageCollection;
+
+                    calculatorChangeResponse.Success = false;
+                    calculatorChangeResponse.Code = "ERROR001";
+
+                    return calculatorChangeResponse;
+                }
                 
-
                 calculatorChangeResponse.SalePrice = calculatorChangeRequest.SalePrice;
                 calculatorChangeResponse.ValuePayment = calculatorChangeRequest.ValuePayment;
                 calculatorChangeResponse.ChangeAmount = calculatorChangeRequest.ValuePayment - calculatorChangeRequest.SalePrice;
-
 
                 Counter.Process(calculatorChangeResponse.ChangeAmount);
 
@@ -66,13 +72,19 @@ namespace ChangeCalculator.Core
                         .Select(x => new ChangeResponse(x.Change.Coin, x.Change.Quantity))
                         .ToList();
 
-                calculatorChangeResponse.MessageCollection.Add(new MessageRequest("", new List<string> { "Process with success" }));
+                                
+                calculatorChangeResponse.Code = "SUCCESS001";
+                calculatorChangeResponse.Success = true;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 calculatorChangeResponse.Success = false;
                 calculatorChangeResponse.Code = "ERROR001";
-                calculatorChangeResponse.MessageCollection.Add(new MessageRequest("", new List<string> { ex.Message }));
+
+                List<string> errorMessageCollection = new List<string>();
+
+                errorMessageCollection.Add("Ocorreu um erro interno. Por favor, tente novamente mais tarde.");
+
+                calculatorChangeResponse.MessageCollection.Add("ERROR",errorMessageCollection);
             }
 
             return calculatorChangeResponse;

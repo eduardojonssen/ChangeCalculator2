@@ -26,6 +26,7 @@ namespace ChangeCalculator.Core
         public virtual void Process(long amount)
         {
             Change.Quantity = 0;
+
             if (amount >= baseCalculate)
             {
                 Change.Quantity = (int)(amount / baseCalculate);

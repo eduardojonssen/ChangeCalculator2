@@ -47,7 +47,6 @@
     <Compile Include="DataContract\CalculatorChangeRequest.cs" />
     <Compile Include="DataContract\CalculatorChangeResponse.cs" />
     <Compile Include="DataContract\ChangeResponse.cs" />
-    <Compile Include="DataContract\MessageRequest.cs" />
     <Compile Include="FifthCentsCounter.cs" />
     <Compile Include="FiveCentsCounter.cs" />
     <Compile Include="Interface\IChangeCalculator.cs" />

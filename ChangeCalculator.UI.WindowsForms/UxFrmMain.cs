@@ -41,7 +41,7 @@ namespace ChangeCalculator.UI.WindowsForms
         private void changeCalculatorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UxFrmChangeCalculator uxFrmChangeCalculator = new UxFrmChangeCalculator();
-         //   uxFrmChangeCalculator.MdiParent = this;
+            uxFrmChangeCalculator.MdiParent = this;
             uxFrmChangeCalculator.Show();
 
         }

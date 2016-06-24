@@ -16,23 +16,9 @@ namespace ChangeCalculator.Core.DataContract
 
         public CalculatorChangeResponse()
         {
-            MessageCollection = new List<MessageRequest>();
             ChangeCollection = new List<ChangeResponse>();
         }
 
-        public override bool IsValid()
-        {
-            if (SalePrice < 0)
-            {
 
-            }
-
-            if (ValuePayment < 0)
-            {
-
-            }
-
-            return false;
-        }
     }
 }

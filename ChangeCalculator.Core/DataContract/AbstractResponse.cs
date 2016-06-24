@@ -11,8 +11,7 @@ namespace ChangeCalculator.Core.DataContract
         public bool Success { get; set; }
         public string Code { get; set; }
 
-        public ICollection<MessageRequest> MessageCollection { get; set; }
+        public IDictionary<string, IList<string>> MessageCollection { get; set; }
 
-        public abstract bool IsValid();
     }
 }

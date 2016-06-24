@@ -14,12 +14,10 @@ using System.Windows.Forms;
 namespace ChangeCalculator.UI.WindowsForms
 {
     public partial class UxFrmChangeCalculator : Form
-    {
-        readonly IChangeCalculator calculatorChange;
-
+    {     
         public UxFrmChangeCalculator()
         {
-            calculatorChange = new ChangeCalculatorManager();
+            
             InitializeComponent();
         }
 
@@ -27,6 +25,8 @@ namespace ChangeCalculator.UI.WindowsForms
         {
             try
             {
+                IChangeCalculator calculatorChange = new ChangeCalculatorManager();
+
                 long totalPaidAmountCents;
                 long totalPaymentAmountCents;
 
@@ -51,9 +51,11 @@ namespace ChangeCalculator.UI.WindowsForms
                     calculatorChange.Calculator(calculatorChangeRequest);
 
                 UxTxbCoins.Text = string.Empty;
+                UxTxtAmount.Text = string.Empty;
+
                 if (calculatorChangeResponse.Success)
                 {
-                    IEnumerable<string> change =
+                    IEnumerable <string> change =
                         calculatorChangeResponse
                                     .ChangeCollection
                                     .Select(x => string.Format("{0} - {1}", x.Coin, x.Quantity));
@@ -64,16 +66,13 @@ namespace ChangeCalculator.UI.WindowsForms
                 else
                 {
                     StringBuilder error = new StringBuilder();
-                    foreach (MessageRequest message in calculatorChangeResponse.MessageCollection)
+                    foreach (KeyValuePair<string,IList<string>> item in calculatorChangeResponse.MessageCollection)
                     {
-                        if (string.IsNullOrEmpty(message.Field) == true)
-                        {
-                            error.AppendLine(message.Field).AppendLine();
-                        }
+                            error.AppendLine(item.Key).AppendLine();
 
-                        foreach (var item in message.MessageCollection)
+                        foreach (string message in item.Value)
                         {
-                            error.AppendFormat("\t{0}", item)
+                            error.AppendFormat("\t{0}", message)
                                  .AppendLine();
                         }
                     }
