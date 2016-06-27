@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChangeCalculator.Core
 {
-    public abstract class Counter
+    public class Counter
     {
         protected readonly long baseCalculate;
         public Change Change { get; protected set; }

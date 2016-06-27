@@ -8,8 +8,33 @@ namespace ChangeCalculator.Core.DataContract
 {
     public abstract class AbstractRequest
     {
-        public IDictionary<string, IList<string>> MessageCollection { get; set; }
+        public AbstractRequest() {
+            ReportCollection = new List<Report>();
+        }
 
-        public abstract bool IsValid();
+        internal List<Report> ReportCollection { get; set; }
+
+        internal bool IsValid() {
+
+            this.ReportCollection.Clear();
+            this.Validate();
+            return (this.ReportCollection.Any() == false);
+        }
+
+        protected abstract void Validate();
+
+        protected void AddError(string field, string errorCode, string message) {
+
+            Report report = new Report();
+
+            report.ErrorCode = errorCode;
+            report.Message = message;
+
+            if (string.IsNullOrEmpty(field) == false) {
+                report.Field = this.GetType().Name + "." + field;
+            }           
+
+            this.ReportCollection.Add(report);
+        }
     }
 }

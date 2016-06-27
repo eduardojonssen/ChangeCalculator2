@@ -47,15 +47,10 @@
     <Compile Include="DataContract\CalculatorChangeRequest.cs" />
     <Compile Include="DataContract\CalculatorChangeResponse.cs" />
     <Compile Include="DataContract\ChangeResponse.cs" />
-    <Compile Include="FifthCentsCounter.cs" />
-    <Compile Include="FiveCentsCounter.cs" />
+    <Compile Include="DataContract\Report.cs" />
     <Compile Include="Interface\IChangeCalculator.cs" />
-    <Compile Include="OneCentsCounter.cs" />
-    <Compile Include="OneRealCounter.cs" />
     <None Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TenCentsCounter.cs" />
-    <Compile Include="TwentyFiveCentsCounter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
