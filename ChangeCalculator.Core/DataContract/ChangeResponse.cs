@@ -8,13 +8,15 @@ namespace ChangeCalculator.Core.DataContract
 {
     public sealed class ChangeResponse
     {
-        public string Coin { get; private set; }
+        public long Value { get; private set; }
         public long Quantity { get; private set; }
+        public string Type { get; private set; }
 
-        public ChangeResponse(string coin, long quantity)
+        public ChangeResponse(long value, long quantity, string type)
         {
-            Coin = coin;
+            Value = value;
             Quantity = quantity;
+            Type = type;
         }
     }
 }

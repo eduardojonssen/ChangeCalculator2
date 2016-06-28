@@ -1,5 +1,6 @@
 ﻿using ChangeCalculator.Core.DataContract;
 using ChangeCalculator.Core.Interface;
+using ChangeCalculator.Core.Processors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,54 +10,6 @@ using System.Threading.Tasks;
 namespace ChangeCalculator.Core {
     public class ChangeCalculatorManager : IChangeCalculator {
 
-        private List<Counter> CounterCollection { get; set; }
-        private Counter Counter { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public ChangeCalculatorManager() {
-
-            CounterCollection = new List<Counter>{
-                new Counter("100 Reais", 10000),
-                new Counter("50 Reais", 5000),
-                new Counter("20 Reais", 2000),
-                new Counter("10 Reais", 1000),
-                new Counter("5 Reais", 500),
-                new Counter("2 Reais", 200),
-                new Counter("1 Real", 100),
-                new Counter("50 cents", 50),
-                new Counter("25 cents", 25),
-                new Counter("10 cents", 10),
-                new Counter("5 cents", 5),
-                new Counter("1 cent", 1)
-            };
-
-
-            for (int i = 0; i < CounterCollection.Count-1; i++) {
-                CounterCollection[i].setNext(CounterCollection[i + 1]);
-            }  
-            
-            
-            //        moeda.setNext(moeda);
-
-
-            //oneRealCounter.setNext(fifthCentsCounter);
-            //fifthCentsCounter.setNext(twentyFiveCentsCounter);
-            //twentyFiveCentsCounter.setNext(tenCentsCounter);
-            //tenCentsCounter.setNext(fiveCentsCounter);
-            //fiveCentsCounter.setNext(oneCentsCounter);
-
-            //CounterCollection = new List<Counter>{
-            //    oneRealCounter,
-            //    fifthCentsCounter,
-            //    twentyFiveCentsCounter,
-            //    tenCentsCounter,
-            //    fiveCentsCounter,
-            //    oneCentsCounter
-            //};
-
-            Counter = CounterCollection.First();
-        }
         /// <summary>
         /// 
         /// </summary>
@@ -78,13 +31,27 @@ namespace ChangeCalculator.Core {
                 calculatorChangeResponse.ValuePayment = calculatorChangeRequest.ValuePayment;
                 calculatorChangeResponse.ChangeAmount = calculatorChangeRequest.ValuePayment - calculatorChangeRequest.SalePrice;
 
-                Counter.Process(calculatorChangeResponse.ChangeAmount);
+                long rest = calculatorChangeResponse.ChangeAmount;
 
-                calculatorChangeResponse.ChangeCollection =
-                    CounterCollection.Where(x => x.Change.Quantity > 0)
-                        .Select(x => new ChangeResponse(x.Change.Coin, x.Change.Quantity))
-                        .ToList();
+                List<ChangeResponse> changesResponse = new List<ChangeResponse>();
 
+                while (rest>0) {
+
+                    AbstractProcessor processor = ProcessorFactory.Create(rest);
+
+                    Dictionary<long,long> result = processor.Process(rest);
+
+                    if(result.Count>0) {
+                        //Adicionar dicionário
+                        foreach (KeyValuePair<long,long> item in result) {
+                            ChangeResponse change = new ChangeResponse(item.Key, item.Value, processor.Name);
+                            changesResponse.Add(change);
+                        }
+                    }
+                    rest = rest - result.Sum(x => x.Key * x.Value);
+                }
+                
+                calculatorChangeResponse.ChangeCollection = changesResponse;
                 calculatorChangeResponse.Success = true;
             }
             catch (Exception ex) {

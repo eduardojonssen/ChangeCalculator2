@@ -49,7 +49,7 @@ namespace ChangeCalculator.UI.WindowsForms {
                     IEnumerable<string> change =
                         calculatorChangeResponse
                                     .ChangeCollection
-                                    .Select(x => string.Format("{0} - {1}", x.Coin, x.Quantity));
+                                    .Select(x => string.Format("{0} - {1} - {2}", x.Value, x.Quantity, x.Type));
 
                     UxTxbCoins.Text = string.Join(Environment.NewLine, change);
                     UxTxtAmount.Text = calculatorChangeResponse.ChangeAmount.ToString();
