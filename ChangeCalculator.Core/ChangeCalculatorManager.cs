@@ -1,5 +1,6 @@
 ﻿using ChangeCalculator.Core.DataContract;
 using ChangeCalculator.Core.Interface;
+using ChangeCalculator.Core.Log;
 using ChangeCalculator.Core.Processors;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,16 @@ namespace ChangeCalculator.Core {
         /// <param name="calculatorChangeRequest"></param>
         /// <returns></returns>
         public CalculatorChangeResponse Calculator(CalculatorChangeRequest calculatorChangeRequest) {
+
+            
+
+            LogFile.Write(calculatorChangeRequest, CategoryLog.Info);
+
             CalculatorChangeResponse calculatorChangeResponse = new CalculatorChangeResponse();
 
             try {
 
+                throw new DivideByZeroException();
 
                 if (calculatorChangeRequest.IsValid() == false) {
                     calculatorChangeResponse.ReportCollection = calculatorChangeRequest.ReportCollection;
@@ -53,8 +60,14 @@ namespace ChangeCalculator.Core {
                 
                 calculatorChangeResponse.ChangeCollection = changesResponse;
                 calculatorChangeResponse.Success = true;
+                
+                LogFile.Write(calculatorChangeResponse, CategoryLog.Error);
+
             }
             catch (Exception ex) {
+
+                LogFile.Write(ex, CategoryLog.Error);
+
                 calculatorChangeResponse.Success = false;
                 calculatorChangeResponse.AddError(null, "ERROR", "Ocorreu um erro interno. Por favor, tente novamente mais tarde.");
             }

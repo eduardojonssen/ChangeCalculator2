@@ -42,7 +42,7 @@ namespace ChangeCalculator.UI.WindowsForms {
                 CalculatorChangeResponse calculatorChangeResponse =
                     calculatorChange.Calculator(calculatorChangeRequest);
 
-                UxTxbCoins.Text = string.Empty;
+                UxTxtCoins.Text = string.Empty;
                 UxTxtAmount.Text = string.Empty;
 
                 if (calculatorChangeResponse.Success) {
@@ -51,7 +51,7 @@ namespace ChangeCalculator.UI.WindowsForms {
                                     .ChangeCollection
                                     .Select(x => string.Format("{0} - {1} - {2}", x.Value, x.Quantity, x.Type));
 
-                    UxTxbCoins.Text = string.Join(Environment.NewLine, change);
+                    UxTxtCoins.Text = string.Join(Environment.NewLine, change);
                     UxTxtAmount.Text = calculatorChangeResponse.ChangeAmount.ToString();
                 }
                 else {
@@ -64,7 +64,7 @@ namespace ChangeCalculator.UI.WindowsForms {
                                  .AppendLine();
                     }
 
-                    UxTxbCoins.Text = error.ToString();
+                    UxTxtCoins.Text = error.ToString();
                 }
             }
             catch (Exception ex) {

@@ -18,7 +18,6 @@ namespace ChangeCalculator.Core.Processors {
             AvailableValueCollection = new List<long> {
                 10000, 5000, 2000, 1000, 500, 200
             };
-
         }
     }
 }

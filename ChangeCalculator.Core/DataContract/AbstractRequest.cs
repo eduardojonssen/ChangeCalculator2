@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChangeCalculator.Core.Log;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace ChangeCalculator.Core.DataContract
 {
     public abstract class AbstractRequest
     {
+        
+        
         public AbstractRequest() {
             ReportCollection = new List<Report>();
         }

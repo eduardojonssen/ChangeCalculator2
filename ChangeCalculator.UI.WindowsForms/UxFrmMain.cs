@@ -45,5 +45,11 @@ namespace ChangeCalculator.UI.WindowsForms
             uxFrmChangeCalculator.Show();
 
         }
+
+        private void UxFrmMain_Load(object sender, EventArgs e) {
+            UxFrmChangeCalculator uxFrmChangeCalculator = new UxFrmChangeCalculator();
+            uxFrmChangeCalculator.MdiParent = this;
+            uxFrmChangeCalculator.Show();
+        }
     }
 }

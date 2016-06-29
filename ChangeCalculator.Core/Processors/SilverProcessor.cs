@@ -5,20 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ChangeCalculator.Core.Processors {
-    public class CoinProcessor : AbstractProcessor 
-    {
+    public class SilverProcessor : AbstractProcessor {
+
         public override string Name {
             get {
-                return "Coin";
+                return "Silver";
             }
         }
 
-        public CoinProcessor() {
+        public SilverProcessor() {
 
             AvailableValueCollection = new List<long> {
-                100, 50, 25, 10, 5
+                100000, 50000
             };
-
         }
     }
 }
