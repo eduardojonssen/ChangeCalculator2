@@ -17,16 +17,14 @@ namespace ChangeCalculator.Core {
         /// <param name="calculatorChangeRequest"></param>
         /// <returns></returns>
         public CalculatorChangeResponse Calculator(CalculatorChangeRequest calculatorChangeRequest) {
-
             
-
-            LogFile.Write(calculatorChangeRequest, CategoryLog.Info);
+            LogManager.Write(calculatorChangeRequest, CategoryLog.Info);
 
             CalculatorChangeResponse calculatorChangeResponse = new CalculatorChangeResponse();
 
             try {
 
-                throw new DivideByZeroException();
+                throw new OutOfMemoryException();
 
                 if (calculatorChangeRequest.IsValid() == false) {
                     calculatorChangeResponse.ReportCollection = calculatorChangeRequest.ReportCollection;
@@ -34,11 +32,8 @@ namespace ChangeCalculator.Core {
                     return calculatorChangeResponse;
                 }
                 
-                calculatorChangeResponse.SalePrice = calculatorChangeRequest.SalePrice;
-                calculatorChangeResponse.ValuePayment = calculatorChangeRequest.ValuePayment;
-                calculatorChangeResponse.ChangeAmount = calculatorChangeRequest.ValuePayment - calculatorChangeRequest.SalePrice;
-
-                long rest = calculatorChangeResponse.ChangeAmount;
+                long changeAmount = calculatorChangeRequest.ValuePayment - calculatorChangeRequest.SalePrice;
+                long rest = changeAmount;
 
                 List<ChangeResponse> changesResponse = new List<ChangeResponse>();
 
@@ -58,18 +53,23 @@ namespace ChangeCalculator.Core {
                     rest = rest - result.Sum(x => x.Key * x.Value);
                 }
                 
+                calculatorChangeResponse.SalePrice = calculatorChangeRequest.SalePrice;
+                calculatorChangeResponse.ValuePayment = calculatorChangeRequest.ValuePayment;
+                calculatorChangeResponse.ChangeAmount = changeAmount;
+
                 calculatorChangeResponse.ChangeCollection = changesResponse;
                 calculatorChangeResponse.Success = true;
-                
-                LogFile.Write(calculatorChangeResponse, CategoryLog.Error);
 
             }
             catch (Exception ex) {
 
-                LogFile.Write(ex, CategoryLog.Error);
+                LogManager.Write(ex, CategoryLog.Error);
 
                 calculatorChangeResponse.Success = false;
                 calculatorChangeResponse.AddError(null, "ERROR", "Ocorreu um erro interno. Por favor, tente novamente mais tarde.");
+            }
+            finally {
+                LogManager.Write(calculatorChangeResponse, CategoryLog.Info);
             }
 
             return calculatorChangeResponse;

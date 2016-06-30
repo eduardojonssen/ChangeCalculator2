@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,6 @@ namespace ChangeCalculator.Core.Processors {
                 return "Bill";
             }
         }
-
         public BillProcessor() {
 
             AvailableValueCollection = new List<long> {

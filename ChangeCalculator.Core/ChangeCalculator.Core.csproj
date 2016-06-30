@@ -61,11 +61,16 @@
     <None Include="ChangeCalculator.Core.config" />
     <None Include="packages.config" />
     <None Include="Program.cs" />
+    <Compile Include="Log\AbstractLog.cs" />
     <Compile Include="Log\CategoryLog.cs" />
     <Compile Include="Log\EntryInfo.cs" />
-    <Compile Include="Log\ILog.cs" />
+    <Compile Include="Log\EventViewLog.cs" />
+    <Compile Include="Log\LogFactory.cs" />
     <Compile Include="Log\LogFile.cs" />
+    <Compile Include="Log\LogManager.cs" />
+    <Compile Include="Log\LogType.cs" />
     <Compile Include="Processors\CandyProcessor.cs" />
+    <Compile Include="Processors\GoldenProcessor.cs" />
     <Compile Include="Processors\SilverProcessor.cs" />
     <Compile Include="Processors\BillProcessor.cs" />
     <Compile Include="Processors\CoinProcessor.cs" />

@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ChangeCalculator.Core.Log {
-    public interface ILog {
-
-        void Write(string message, CategoryLog categoryLog, EntryInfo entryInfo, Exception ex);
+    public enum LogType {
+        Undefined,               
+        EventViewer,
+        File
     }
 }

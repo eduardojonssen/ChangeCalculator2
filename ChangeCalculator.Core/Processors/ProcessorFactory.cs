@@ -15,13 +15,16 @@ namespace ChangeCalculator.Core.Processors {
                 new SilverProcessor(),
                 new BillProcessor(),
                 new CoinProcessor(),
-                new CandyProcessor()
+                new CandyProcessor(),
+                new GoldenProcessor()
+
+
 
                 //Add new processors above
             };
 
             foreach (AbstractProcessor processor in
-                processors.OrderByDescending(x => x.AvailableValueCollection.Min())) { 
+                processors.Where(s=>s.IsEnabled == true).OrderByDescending(x => x.AvailableValueCollection.Min())) { 
 
                 if(amount >= processor.AvailableValueCollection.Min()) {
                     return processor;

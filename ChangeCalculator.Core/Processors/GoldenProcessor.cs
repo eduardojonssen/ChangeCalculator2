@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ChangeCalculator.Core.Processors {
-    public class CandyProcessor : AbstractProcessor 
-    {
+    public class GoldenProcessor : AbstractProcessor {
+
         public override string Name {
             get {
-                return "Candy";
+                return "Golden";
             }
         }
 
-        public CandyProcessor() {
+        public GoldenProcessor() {
 
             AvailableValueCollection = new List<long> {
-                3, 1
+                2000000, 1000000, 500000
             };
-
         }
-        
+
     }
 }
