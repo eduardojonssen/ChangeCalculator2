@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculatorCore.cs" />
     <Compile Include="ChangeCalculatorManager.cs" />
     <Compile Include="DataContract\AbstractRequest.cs" />
     <Compile Include="DataContract\AbstractResponse.cs" />
@@ -57,8 +58,9 @@
     <Compile Include="DataContract\CalculatorChangeResponse.cs" />
     <Compile Include="DataContract\ChangeResponse.cs" />
     <Compile Include="DataContract\Report.cs" />
+    <Compile Include="ICalculatorCore.cs" />
+    <Compile Include="Interceptors\RequestInterceptor.cs" />
     <Compile Include="Interface\IChangeCalculator.cs" />
-    <None Include="ChangeCalculator.Core.config" />
     <None Include="packages.config" />
     <None Include="Program.cs" />
     <Compile Include="Log\AbstractLog.cs" />

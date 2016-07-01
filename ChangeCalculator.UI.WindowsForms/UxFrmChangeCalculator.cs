@@ -21,6 +21,7 @@ namespace ChangeCalculator.UI.WindowsForms {
         private void UxBtnCalculate_Click(object sender, EventArgs e) {
             try {
                 IChangeCalculator calculatorChange = new ChangeCalculatorManager();
+                var lst = calculatorChange.GetBillValues();
 
                 long totalPaidAmountCents;
                 long totalPaymentAmountCents;
