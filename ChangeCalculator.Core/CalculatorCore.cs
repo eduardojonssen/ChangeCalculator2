@@ -25,7 +25,7 @@ namespace ChangeCalculator.Core {
 
             CalculatorChangeResponse calculatorChangeResponse = new CalculatorChangeResponse();
 
-            throw new OutOfMemoryException();
+           // throw new OutOfMemoryException();
             
             long changeAmount = calculatorChangeRequest.ValuePayment - calculatorChangeRequest.SalePrice;
             long rest = changeAmount;
